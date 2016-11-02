@@ -3,7 +3,8 @@
   <head>
     <title>Form</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/bootstrap.css">
+    <link rel="stylesheet" href="styles/custom.css">
     <!-- Angular -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
 
@@ -16,17 +17,48 @@
   </head>
   <body>
     <div class="container" ng-controller="FormController">
-      <form class="form-horizontal" ng-submit="sendFormData()">
+      <form class="form-horizontal" name="form" ng-submit="sendFormData()" novalidate>
         <div class="form-group">
           <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
           <div class="col-sm-10">
-            <input type="email" class="form-control" id="inputEmail3" placeholder="Email" ng-model="formData.email">
+            <input
+              type="email"
+              name="overwrittenEmail"
+              class="form-control"
+              id="inputEmail3"
+              placeholder="Email"
+              ng-model="formData.email"
+              required
+              ng-pattern="rules.email.pattern">
+            <div role="alert">
+              <span class="error" ng-show="form.overwrittenEmail.$error.required">
+                Required!</span>
+              <span class="error" ng-show="form.overwrittenEmail.$error.pattern">
+                Not valid email!</span>
+            </div>
           </div>
         </div>
         <div class="form-group">
           <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
           <div class="col-sm-10">
-            <input type="password" class="form-control" id="inputPassword3" placeholder="Password" ng-model="formData.password">
+            <input
+              type="password"
+              name="overwrittenPassword"
+              ng-minlength="rules.password.minLength"
+              ng-maxlength="rules.password.maxLength"
+              class="form-control"
+              id="inputPassword3"
+              placeholder="Password"
+              ng-model="formData.password"
+              required>
+            <div role="alert">
+              <span class="error" ng-show="form.overwrittenPassword.$error.required">
+                Required!</span>
+              <span class="error" ng-show="form.overwrittenPassword.$error.minlength">
+                The password must not be less than {{rules.password.minLength}} symbols!</span>
+              <span class="error" ng-show="form.overwrittenPassword.$error.maxlength">
+                The password must not exceed {{rules.password.maxLength} symbols!</span>
+            </div>
           </div>
         </div>
         <div class="form-group">
