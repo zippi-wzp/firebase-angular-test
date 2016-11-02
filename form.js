@@ -20,7 +20,7 @@
   .controller("FormController", ['$scope', '$timeout', 'fireBaseService', FormController]);
 
   function FormController ($scope, $timeout, fireBaseService) {
-    $scope.formState = false;
+    $scope.formSuccessState = false;
     $scope.formData = {
       email: '',
       password: ''
@@ -37,9 +37,9 @@
     $scope.sendFormData = function () {
       if (!$scope.form.$invalid) {
         fireBaseService.storeData($scope.formData);
-        $scope.formState = true;
+        $scope.formSuccessState = true;
         $timeout(function () {
-          $scope.formState = false;
+          $scope.formSuccessState = false;
           $scope.formData = {
             email: '',
             password: ''
