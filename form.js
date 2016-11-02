@@ -17,9 +17,10 @@
       }
     };
   }])
-  .controller("FormController", ['$scope', 'fireBaseService', FormController]);
+  .controller("FormController", ['$scope', '$timeout', 'fireBaseService', FormController]);
 
-  function FormController ($scope, fireBaseService) {
+  function FormController ($scope, $timeout, fireBaseService) {
+    $scope.formState = false;
     $scope.formData = {
       email: '',
       password: ''
@@ -34,7 +35,17 @@
       }
     }
     $scope.sendFormData = function () {
-      fireBaseService.storeData($scope.formData);
+      if (!$scope.form.$invalid) {
+        fireBaseService.storeData($scope.formData);
+        $scope.formState = true;
+        $timeout(function () {
+          $scope.formState = false;
+          $scope.formData = {
+            email: '',
+            password: ''
+          }
+        }, 2000);
+      }
     }
   }
 })();

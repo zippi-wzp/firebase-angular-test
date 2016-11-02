@@ -1,3 +1,23 @@
 .container {
   margin-top: 10em;
 }
+.error {
+  color: rgb(255, 255, 255);
+  display: inline-block;
+  padding: 0.5em;
+  margin-top: 6px;
+  text-align: center;
+  border-radius: 2px;
+  border: 2px solid rgb(236, 8, 8);
+  background-color: rgb(255, 107, 156);
+}
+.success {
+  color: rgb(255, 255, 255);
+  display: inline-block;
+  padding: 0.5em;
+  margin-top: 6px;
+  text-align: center;
+  border-radius: 2px;
+  border: 2px solid rgb(1, 121, 29);
+  background-color: rgb(75, 255, 118);
+}
