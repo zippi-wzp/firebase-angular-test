@@ -1,15 +1,15 @@
 (function () {
   'use strict';
-  
+
   angular.module('Form.config', [])
   .constant('apiKey', 'AIzaSyCaLfRuTpxCF1G5VyqbKQaTRvXgvElrv7A')
-  .constant('databaseUrl', 'https://test-task-737e1.firebaseio.com/');
-  // .run(['apiKey', 'databaseUrl', function (apiKey, databaseUrl) {
-  //     firebase.initializeApp(apiKey, databaseUrl);
-  //   }]
-  // );
+  .constant('databaseUrl', 'https://test-task-737e1.firebaseio.com/')
+  .run(['apiKey', 'databaseUrl', function (apiKey, databaseUrl) {
+      firebase.initializeApp(apiKey, databaseUrl);
+    }]
+  );
 
-  angular.module("Form", ["Form.config", "firebase"])
+  angular.module('Form', ['Form.config', 'firebase'])
   // .constant('apiKey', 'AIzaSyCaLfRuTpxCF1G5VyqbKQaTRvXgvElrv7A')
   // .constant('databaseUrl', 'https://test-task-737e1.firebaseio.com/')
   // .run('apiKey', 'databaseUrl', [function (apiKey, databaseUrl) {
@@ -26,15 +26,15 @@
         //   firebase.initializeApp(config);
         // },
         storeData: function (data) {
-          firebase.database().ref().child('messages').set(data);
-          //ref.set(data);
+          var ref = firebase.database().ref().child('messages');
+          ref.set(data);
         }
       };
     }
   ])
-  .controller("FormController", ['$scope', '$firebase', 'apiKey', 'databaseURL', '$firebaseObject', 'FireBaseService', FormController]);
+  .controller("FormController", ['$scope', '$firebase', 'apiKey', 'databaseUrl', '$firebaseObject', 'FireBaseService', FormController]);
 
-  function FormController ($scope, $firebase, apiKey, databaseURL, $firebaseObject, FireBaseService) {
+  function FormController ($scope, $firebase, apiKey, databaseUrl, $firebaseObject, FireBaseService) {
     $scope.formData = {
       email: '',
       password: ''
@@ -43,7 +43,7 @@
     // var ref = firebase.database().ref().child('messages');
 
     $scope.sendFormData = function () {
-      FireBaseService.storeData($scope.formData, ref);
+      FireBaseService.storeData($scope.formData);
     }
   }
 })();
